@@ -1,9 +1,11 @@
 #include "includes.h"
+#include "reclass.h"
 #include "memory.h"
 #include "globalVariables.h"
 #include "ColorConsole.h"
 #include "config.h"
 #include "menu.h"
+
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -119,9 +121,15 @@ DWORD WINAPI MainThread(LPVOID lpReserved)
 	printf(" - Black Ops 2 Multiplayer PID: %u\n", Config.PID);
 	CC::White(hConsole);
 
+	uintptr_t CurrentWeaponAmmoAddress = Config.BaseAddress + 0x2E09381C;
+
+	float CurrentWeaponAmmo;
+
+	LocalPlayer* localPlayer = (LocalPlayer*)CurrentWeaponAmmoAddress;
 	// Loop Checking if Exit Key Pressed
 	while (!GetAsyncKeyState(VK_END) & 1)
 	{
+		printf("X: %f - Y: %f - Z: %f\n", localPlayer->Position.x, localPlayer->Position.y, localPlayer->Position.z);
 
 	}
 	kiero::shutdown();
